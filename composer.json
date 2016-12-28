@@ -1,0 +1,24 @@
+{
+	"name": "lib16/xml",
+	"type": "library",
+	"description": "lib16 XML Builder is a PHP 7 library for creating XML documents.",
+	"keywords": ["xml", "builder", "writer"],
+	"homepage" : "https://github.com/lib16/xml-builder-php",
+	"license": "MIT",
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=7.0",
+		"lib16/utils": ">=1.0",
+		"myclabs/php-enum" : ">=1.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Lib16\\Xml\\": "src/"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Lib16\\Utils\\Tests\\" : "tests/"
+		}
+	}
+}
