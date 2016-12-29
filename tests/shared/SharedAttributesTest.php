@@ -10,19 +10,17 @@ require_once 'src/shared/ClassAttribute.php';
 require_once 'src/shared/MediaAttribute.php';
 require_once 'src/shared/Target.php';
 require_once 'src/shared/TargetAttribute.php';
+require_once 'src/shared/TitleAttribute.php';
 require_once 'tests/XmlTestCase.php';
 require_once 'tests/xmlClasses.php';
 
 use Lib16\XML\Tests\{XmlTestCase, Tml};
-use Lib16\XML\Shared\MediaAttribute;
-use Lib16\XML\Shared\Target;
-use Lib16\XML\Shared\TargetAttribute;
+use Lib16\XML\Shared\{ClassAttribute, MediaAttribute, Target, TargetAttribute, TitleAttribute};
 use Lib16\Utils\Enums\Media;
-use Lib16\XML\Shared\ClassAttribute;
 
 class MyXml extends Tml
 {
-	use ClassAttribute, MediaAttribute, TargetAttribute;
+	use ClassAttribute, MediaAttribute, TargetAttribute, TitleAttribute;
 }
 
 class SharedAttributesTest extends XmlTestCase
@@ -93,6 +91,7 @@ class SharedAttributesTest extends XmlTestCase
 			[MyXml::cs('e')->setTarget(Target::PARENT()), '<e target="_parent"/>'],
 			[MyXml::cs('e')->setTarget(Target::SELF()), '<e target="_self"/>'],
 			[MyXml::cs('e')->setTarget(Target::TOP()), '<e target="_top"/>'],
+			[MyXml::cs('e')->setTitle('Lorem Ipsum'), '<e title="Lorem Ipsum"/>']
 		];
 	}
 

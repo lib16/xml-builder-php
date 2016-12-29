@@ -2,13 +2,13 @@
 
 namespace Lib16\XML;
 
-final class ProcessingInstruction
+class ProcessingInstruction
 {
-	private $target;
-	private $content;
-	private $attributes;
+	protected $target;
+	protected $content;
+	protected $attributes;
 
-	private function __construct(string $target, string $content = null)
+	protected function __construct(string $target, string $content = null)
 	{
 		$this->target = $target;
 		$this->content = $content;
@@ -19,7 +19,7 @@ final class ProcessingInstruction
 		return new ProcessingInstruction($target, $content);
 	}
 
-	public function attrib(string $name, string $value): self
+	public function attrib(string $name, string $value = null): self
 	{
 		if ($this->attributes == null) {
 			$this->attributes = new Attributes(null);
@@ -35,7 +35,7 @@ final class ProcessingInstruction
 			$markup .= ' ' . $this->content;
 		}
 		if (!is_null($this->attributes)) {
-			$markup .= $this->attributes->getMarkup('');
+			$markup .= $this->attributes->getMarkup();
 		}
 		$markup .= ' ?>';
 		return $markup;
