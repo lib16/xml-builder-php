@@ -2,21 +2,11 @@
 
 namespace Lib16\XML\Tests\Shared;
 
-require_once 'vendor/myclabs/php-enum/src/Enum.php';
-require_once 'vendor/lib16/utils/src/enums/Media.php';
-require_once 'src/Xml.php';
-require_once 'src/Attributes.php';
-require_once 'src/shared/ClassAttribute.php';
-require_once 'src/shared/MediaAttribute.php';
-require_once 'src/shared/Target.php';
-require_once 'src/shared/TargetAttribute.php';
-require_once 'src/shared/TitleAttribute.php';
-require_once 'tests/XmlTestCase.php';
-require_once 'tests/xmlClasses.php';
+require_once 'vendor/autoload.php';
 
-use Lib16\XML\Tests\{XmlTestCase, Tml};
+use Lib16\Utils\Enums\CSS\Media;
 use Lib16\XML\Shared\{ClassAttribute, MediaAttribute, Target, TargetAttribute, TitleAttribute};
-use Lib16\Utils\Enums\Media;
+use Lib16\XML\Tests\{XmlTestCase, Tml};
 
 class MyXml extends Tml
 {

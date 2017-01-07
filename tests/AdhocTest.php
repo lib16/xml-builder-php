@@ -2,10 +2,7 @@
 
 namespace Lib16\XML\Tests;
 
-require_once 'src/Xml.php';
-require_once 'src/Attributes.php';
-require_once 'src/Adhoc.php';
-require_once 'tests/XmlTestCase.php';
+require_once 'vendor/autoload.php';
 require_once 'tests/xmlClasses.php';
 
 use Lib16\XML\Xml;

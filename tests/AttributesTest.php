@@ -2,16 +2,10 @@
 
 namespace Lib16\XML\Tests;
 
-//require_once 'vendor/autoload.php';
-
-require_once 'vendor/myclabs/php-enum/src/Enum.php';
-require_once 'vendor/lib16/utils/src/enums/Unit.php';
-require_once 'vendor/lib16/utils/src/enums/Media.php';
-require_once 'vendor/lib16/utils/src/NumberFormatter.php';
-require_once 'src/Attributes.php';
+require_once 'vendor/autoload.php';
 
 use Lib16\Utils\NumberFormatter;
-use Lib16\Utils\Enums\{Unit, Media};
+use Lib16\Utils\Enums\CSS\{LengthUnit, Media};
 use Lib16\XML\Attributes;
 use PHPUnit\Framework\TestCase;
 
@@ -119,9 +113,9 @@ class AttributesTest extends TestCase
 			[(new Attributes())->setNumber('a', 12.3456789, $f), ' a="12.3457"'],
 			[(new Attributes())->setNumber('a', 12.3, $f), ' a="12.3"'],
 			[(new Attributes())->setNumber('a', 12, $f), ' a="12"'],
-			[(new Attributes())->setNumber('a', 16, $f, Unit::PX()), ' a="16px"'],
-			[(new Attributes())->setNumber('a', 50, $f, Unit::PERCENT()), ' a="50%"'],
-			[(new Attributes())->setNumber('a', 1.5, $f, Unit::NONE()), ' a="1.5"'],
+			[(new Attributes())->setNumber('a', 16, $f, LengthUnit::PX()), ' a="16px"'],
+			[(new Attributes())->setNumber('a', 50, $f, LengthUnit::PERCENT()), ' a="50%"'],
+			[(new Attributes())->setNumber('a', 1.5, $f, LengthUnit::NONE()), ' a="1.5"'],
 			[(new Attributes())->setNumber('a', 1.5, $f, null), ' a="1.5"'],
 			[(new Attributes())->setNumber('a', null, $f), ''],
 
@@ -134,11 +128,11 @@ class AttributesTest extends TestCase
 				' a="10.5 5.25 10.5"'
 			],
 			[(new Attributes())->setNumbers('a', ' ', $f), ''],
-			[(new Attributes())->setNumbers('a', ' ', $f, Unit::PX()), ''],
+			[(new Attributes())->setNumbers('a', ' ', $f, LengthUnit::PX()), ''],
 			[
 				(new Attributes())
-						->setNumbers('a', ' ', $f, Unit::PX(), 10.00001, 5)
-						->setNumbers('a', ' ', $f, Unit::PX(), 10)
+						->setNumbers('a', ' ', $f, LengthUnit::PX(), 10.00001, 5)
+						->setNumbers('a', ' ', $f, LengthUnit::PX(), 10)
 						->setNumbers('a', ' ', $f),
 				' a="10px 5px 10px"'
 			],

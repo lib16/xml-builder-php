@@ -3,7 +3,7 @@
 namespace Lib16\XML;
 
 use MyCLabs\Enum\Enum;
-use Lib16\Utils\Enums\Unit;
+use Lib16\Utils\Enums\CSS\Unit;
 use Lib16\Utils\NumberFormatter;
 
 /**

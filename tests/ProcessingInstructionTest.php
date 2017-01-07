@@ -2,12 +2,8 @@
 
 namespace Lib16\XML\Tests;
 
-//require_once 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-require_once 'src/Attributes.php';
-require_once 'src/ProcessingInstruction.php';
-
-use Lib16\XML\Attributes;
 use Lib16\XML\ProcessingInstruction;
 use PHPUnit\Framework\TestCase;
 

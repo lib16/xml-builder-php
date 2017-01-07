@@ -1,19 +1,11 @@
 <?php
 
-namespace Lib16\XML\Shared\Tests;
+namespace Lib16\XML\Tests\Shared;
 
-require_once 'vendor/myclabs/php-enum/src/Enum.php';
-require_once 'vendor/lib16/utils/src/enums/Media.php';
-require_once 'src/Xml.php';
-require_once 'src/Attributes.php';
-require_once 'src/shared/MediaAttribute.php';
-require_once 'src/shared/TitleAttribute.php';
-require_once 'src/shared/XmlStylesheetInstruction.php';
-require_once 'src/shared/XmlStylesheet.php';
-require_once 'tests/XmlTestCase.php';
-require_once 'tests/xmlClasses.php';
+require_once 'vendor/autoload.php';
 
-use Lib16\Utils\Enums\Media;
+use Lib16\Utils\Enums\CSS\Media;
+use Lib16\Utils\Enums\Mime\StyleType;
 use Lib16\XML\Shared\XmlStylesheet;
 use Lib16\XML\Tests\XmlTestCase;
 use Lib16\XML\Tests\Tml;
@@ -41,11 +33,11 @@ class XmlStylesheetTest extends XmlTestCase
 			[
 				function() {
 					$xml = StyledXml::createRoot('styled');
-					$xml->xmlStylesheet('one.css',
-							true, 'One', true, 'UTF-8', Media::SCREEN(), Media::PRINT());
+					$xml->xmlStylesheet('one.css', true, 'One',
+							StyleType::CSS(), 'UTF-8', Media::SCREEN(), Media::PRINT());
 					$xml->xmlStylesheet('two.css')
 							->setMedia(Media::SCREEN(), Media::PRINT())
-							->setType()
+							->setType(StyleType::CSS())
 							->setAlternate()
 							->setTitle('Two')
 							->setCharset('UTF-8');

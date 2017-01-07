@@ -2,7 +2,7 @@
 
 namespace Lib16\XML\Shared;
 
-use Lib16\Utils\Enums\Media;
+use Lib16\Utils\Enums\CSS\Media;
 
 trait MediaAttribute
 {

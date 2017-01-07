@@ -2,7 +2,8 @@
 
 namespace Lib16\XML\Shared;
 
-use Lib16\Utils\Enums\Media;
+use Lib16\Utils\Enums\CSS\Media;
+use Lib16\Utils\Enums\Mime\StyleType;
 use Lib16\XML\ProcessingInstruction;
 
 class XmlStylesheetInstruction extends ProcessingInstruction
@@ -12,13 +13,13 @@ class XmlStylesheetInstruction extends ProcessingInstruction
 	public static function createXmlStylesheetInstruction(string $href,
 			bool $alternate = false,
 			string $title = null,
-			bool $setType = false,
+			StyleType $type = null,
 			string $charset = null,
 			Media ...$media): self
 	{
 		return (new XmlStylesheetInstruction('xml-stylesheet'))
 				->attrib('href', $href)
-				->setType($setType)
+				->setType($type)
 				->setMedia(...$media)
 				->setAlternate($alternate)
 				->setTitle($title)
@@ -35,8 +36,8 @@ class XmlStylesheetInstruction extends ProcessingInstruction
 		return $this->attrib('charset', $charset);
 	}
 
-	public function setType(bool $setType = true)
+	public function setType(StyleType $type = null)
 	{
-		return $this->attrib('type', $setType ? 'text/css' : null);
+		return $this->attrib('type', $type);
 	}
 }

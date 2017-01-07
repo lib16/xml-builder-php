@@ -2,15 +2,7 @@
 
 namespace Lib16\XML\Tests\Shared\XLink;
 
-require_once 'src/Xml.php';
-require_once 'src/Attributes.php';
-require_once 'src/shared/xlink/XLink.php';
-require_once 'src/shared/xlink/XLinkConstants.php';
-require_once 'src/shared/xlink/Actuate.php';
-require_once 'src/shared/xlink/Show.php';
-require_once 'src/shared/xlink/Type.php';
-require_once 'tests/XmlTestCase.php';
-require_once 'tests/xmlClasses.php';
+require_once 'vendor/autoload.php';
 
 use Lib16\XML\Shared\XLink\{XLink, XLinkConstants, Actuate, Show, Type};
 use Lib16\XML\Tests\{XmlTestCase, Tml};

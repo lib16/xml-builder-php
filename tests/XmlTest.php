@@ -2,14 +2,9 @@
 
 namespace Lib16\XML\Tests;
 
-require_once 'vendor/lib16/utils/src/enums/Media.php';
-require_once 'src/Xml.php';
-require_once 'src/Attributes.php';
-require_once 'src/Space.php';
-require_once 'tests/XmlTestCase.php';
-require_once 'tests/xmlClasses.php';
+require_once 'vendor/autoload.php';
 
-use Lib16\Utils\Enums\Media;
+use Lib16\Utils\Enums\CSS\Media;
 use Lib16\XML\{Xml, Attributes, Space};
 
 const MULTILINE = "lorem\nipsum\ndolor\nsit";
