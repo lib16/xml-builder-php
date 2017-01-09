@@ -1,6 +1,6 @@
 #`lib16/xml-builder-php`
 
-lib16 XML Builder is a PHP 7 library for creating XML documents.
+Some utility classes for lib16.
 
 ## Installation with Composer
 
@@ -31,26 +31,28 @@ class Kml extends Xml
     const FILENAME_EXTENSION = 'kml';
     const XML_NAMESPACE = 'http://www.opengis.net/kml/2.2';
 
-    public static function createKml()
+    public static function createKml(): self
     {
         return static::createRoot('kml');
     }
 
-    public function placemark($name, $description, $longitude, $latitude, $altitude = 0)
+    public function placemark(string $name, string $description,
+            float $longitude, float $latitude, float $altitude = null): self
     {
         $pm = $this->append('Placemark');
         $pm->append('name', $name);
         $pm->append('description', $description);
-        $pm->append('Point')
-                ->append('coordinates', $longitude . ',' . $latitude . ',' . $altitude);
+        $pm->append('Point')->append('coordinates',
+                implode(',', array_filter([$longitude, $latitude, $altitude])));
         return $pm;
     }
 }
 
 $myKml = Kml::createKml();
-$myKml->placemark('Cologne Cathedral',
+$myKml->placemark(
+        'Cologne Cathedral',
         'Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.',
-        '50.9413', '6.958');
+        50.9413, 6.958);
 $myKml->headerfields('cologne-cathedral');
 print $myKml;
 ```
@@ -64,7 +66,7 @@ The generated markup:
         <name>Cologne Cathedral</name>
         <description>Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.</description>
         <Point>
-            <coordinates>50.9413,6.958,0</coordinates>
+            <coordinates>50.9413,6.958</coordinates>
         </Point>
     </Placemark>
 </kml>
@@ -89,7 +91,7 @@ class Html extends Xml
     const DOCTYPE = '<!DOCTYPE html>';
     const HTML_MODE_ENABLED = true;
 
-    public static function createHtml($lang = null, $manifest = null)
+    public static function createHtml(string $lang = null, string $manifest = null): self
     {
         return static::createRoot('html')
                 ->attrib('lang', $lang)
@@ -123,3 +125,4 @@ The generated markup:
     </body>
 </html>
 ```
+

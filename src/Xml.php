@@ -300,6 +300,14 @@ class Xml
 		return 'Content-Type: ' . static::MIME_TYPE . '; charset=' . static::CHARACTER_ENCODING;
 	}
 
+	public static function headerfields(string $filename = null)
+	{
+		if ($filename) {
+			header(self::getContentDispositionHeaderfield($filename));
+		}
+		header(self::getContentTypeHeaderfield());
+	}
+
 	private function isRoot(): bool
 	{
 		return $this->root == $this;
