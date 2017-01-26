@@ -10,27 +10,23 @@ trait XmlAttributes
 	/**
 	 * @param  string|null  lang  A BCP 47 language tag. For example "en" or "fr-CA".
 	 */
-	public function setLang(string $lang): self
+	public function setLang(string $lang = null): self
 	{
-		$this->attributes->set('xml:lang', $lang);
-		return $this;
+		return $this->attrib('xml:lang', $lang);
 	}
 
-	public function setSpace(Space $space): self
+	public function setSpace(Space $space = null): self
 	{
-		$this->attributes->set('xml:space', $space);
-		return $this;
+		return $this->attrib('xml:space', $space);
 	}
 
-	public function setBase(string $base): self
+	public function setBase(string $base = null): self
 	{
-		$this->attributes->set('xml:base', $base);
-		return $this;
+		return $this->attrib('xml:base', $base);
 	}
 
-	public function setId(string $id): self
+	public function setId(string $id = null): self
 	{
-		$this->attributes->set('xml:id', $id);
-		return $this;
+		return $this->attrib('xml:id', $id);
 	}
 }
