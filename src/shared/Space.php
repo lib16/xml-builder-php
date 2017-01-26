@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib16\XML;
+namespace Lib16\XML\Shared;
 
 use MyCLabs\Enum\Enum;
 

@@ -5,12 +5,13 @@ namespace Lib16\XML\Tests\Shared;
 require_once 'vendor/autoload.php';
 
 use Lib16\Utils\Enums\CSS\Media;
-use Lib16\XML\Shared\{ClassAttribute, MediaAttribute, Target, TargetAttribute, TitleAttribute};
+use Lib16\XML\Shared\{ClassAttribute, MediaAttribute, Target, TargetAttribute};
+use Lib16\XML\Shared\{TitleAttribute, Space, XmlAttributes};
 use Lib16\XML\Tests\{XmlTestCase, Tml};
 
 class MyXml extends Tml
 {
-	use ClassAttribute, MediaAttribute, TargetAttribute, TitleAttribute;
+	use ClassAttribute, MediaAttribute, TargetAttribute, TitleAttribute, XmlAttributes;
 }
 
 class SharedAttributesTest extends XmlTestCase
@@ -81,7 +82,14 @@ class SharedAttributesTest extends XmlTestCase
 			[MyXml::cs('e')->setTarget(Target::PARENT()), '<e target="_parent"/>'],
 			[MyXml::cs('e')->setTarget(Target::SELF()), '<e target="_self"/>'],
 			[MyXml::cs('e')->setTarget(Target::TOP()), '<e target="_top"/>'],
-			[MyXml::cs('e')->setTitle('Lorem Ipsum'), '<e title="Lorem Ipsum"/>']
+			[MyXml::cs('e')->setTitle('Lorem Ipsum'), '<e title="Lorem Ipsum"/>'],
+
+			// XmlAttributes
+			[MyXml::cs('e')->setLang('fr'), "<e xml:lang=\"fr\"/>"],
+			[MyXml::cs('e')->setSpace(Space::DEFAULT()), "<e xml:space=\"default\"/>"],
+			[MyXml::cs('e')->setSpace(Space::PRESERVE()), "<e xml:space=\"preserve\"/>"],
+			[MyXml::cs('e')->setBase('http://example.com'), "<e xml:base=\"http://example.com\"/>"],
+			[MyXml::cs('e')->setId('foo'), "<e xml:id=\"foo\"/>"],
 		];
 	}
 

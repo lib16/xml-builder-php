@@ -230,44 +230,6 @@ class Xml
 		return $this;
 	}
 
-	/**
-	 * Sets the <code>xml:lang</code> attribute.
-	 *
-	 * @param  lang  A BCP 47 language tag. For example "en" or "fr-CA".
-	 */
-	public function setLang(string $lang): self
-	{
-		$this->attributes->set('xml:lang', $lang);
-		return $this;
-	}
-
-	/**
-	 * Sets the <code>xml:space</code> attribute.
-	 */
-	public function setSpace(Space $space): self
-	{
-		$this->attributes->set('xml:space', $space);
-		return $this;
-	}
-
-	/**
-	 * Sets the <code>xml:base</code> attribute.
-	 */
-	public function setBase(string $base): self
-	{
-		$this->attributes->set('xml:base', $base);
-		return $this;
-	}
-
-	/**
-	 * Sets the <code>xml:id</code> attribute.
-	 */
-	public function setId(string $id): self
-	{
-		$this->attributes->set('xml:id', $id);
-		return $this;
-	}
-
 	public function getMarkup(): string
 	{
 		return $this->buildMarkup(null);

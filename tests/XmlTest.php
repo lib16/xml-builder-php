@@ -267,16 +267,6 @@ class XmlTest extends XmlTestCase
 			[Tml::cs('e')->attrib('a', 1920), '<e a="1920"/>'],
 			[Tml::cs('e')->attrib('a', 1.23456), '<e a="1.23456"/>'],
 
-			// setLang()
-			[Tml::cs('e')->setLang('fr'), "<e xml:lang=\"fr\"/>"],
-			// setSpace()
-			[Tml::cs('e')->setSpace(Space::DEFAULT()), "<e xml:space=\"default\"/>"],
-			[Tml::cs('e')->setSpace(Space::PRESERVE()), "<e xml:space=\"preserve\"/>"],
-			// setBase()
-			[Tml::cs('e')->setBase('http://example.com'), "<e xml:base=\"http://example.com\"/>"],
-			// setId()
-			[Tml::cs('e')->setId('foo'), "<e xml:id=\"foo\"/>"],
-
 			// getContentDispositionHeaderfield(), getContentTypeHeaderfield()
 			[
 				Xml::getContentDispositionHeaderfield('test'),
