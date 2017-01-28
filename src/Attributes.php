@@ -87,7 +87,7 @@ class Attributes
 		else {
 			$value = array_unique(array_merge(explode($delimiter, $value), $parts));
 		}
-		$value = implode($delimiter, array_filter($value));
+		$value = implode($delimiter, array_filter($value, 'strlen'));
 		return $this->set($name, $value == '' ? null : $value);
 	}
 
@@ -113,7 +113,7 @@ class Attributes
 			string $delimiter, NumberFormatter $formatter, Unit $unit = null, ...$numbers)
 	{
 		foreach ($numbers as $i => $number) {
-			$numbers[$i] = $formatter->format($number, $unit);;
+			$numbers[$i] = $formatter->format($number, $unit);
 		}
 		return $this->setComplex($name, $delimiter, false, ...$numbers);
 	}

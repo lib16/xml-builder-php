@@ -122,10 +122,10 @@ class AttributesTest extends TestCase
 			// setNumbers()
 			[
 				(new Attributes())
-						->setNumbers('a', ' ', $f, null, 10.5, 5.25)
+						->setNumbers('a', ' ', $f, null, 10.5, 5.25, 0)
 						->setNumbers('a', ' ', $f, null, 10.5)
 						->setNumbers('a', ' ', $f),
-				' a="10.5 5.25 10.5"'
+				' a="10.5 5.25 0 10.5"'
 			],
 			[(new Attributes())->setNumbers('a', ' ', $f), ''],
 			[(new Attributes())->setNumbers('a', ' ', $f, LengthUnit::PX()), ''],
