@@ -5,7 +5,7 @@ namespace Lib16\XML\Tests;
 require_once 'vendor/autoload.php';
 
 use Lib16\Utils\Enums\CSS\Media;
-use Lib16\XML\{Xml, Attributes, Space};
+use Lib16\XML\{Xml, Attributes};
 
 const MULTILINE = "lorem\nipsum\ndolor\nsit";
 
