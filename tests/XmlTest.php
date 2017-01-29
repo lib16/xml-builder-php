@@ -76,12 +76,13 @@ class XmlTest extends XmlTestCase
 			[
 				Tml::cs()
 						->append('e')->getParent()
-						->comment('comment')->getParent()
+						->comment('comment')
 						->append('f', 'content 1')->appendText('content 2'),
 				"<e/>\n<!-- comment -->\n<f>\n\tcontent 1\n\tcontent 2\n</f>"
 			],
 			[Tml::cs()->append('e', '')->appendText('content'), "<e>\n\tcontent\n</e>"],
 			[Tml::cs('e')->appendText('one')->appendText('two'), "<e>\n\tone\n\ttwo\n</e>"],
+			[Tml::cs('e')->appendText('one', 'two'), "<e>\n\tone\n\ttwo\n</e>"],
 			[
 				function() {
 					$xml = TML::cs('section')->append('div');

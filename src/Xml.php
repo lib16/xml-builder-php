@@ -97,9 +97,10 @@ class Xml
 	/**
 	 * Appends a text line.
 	 */
-	public function appendText(string $text): self
+	public function appendText(string ...$text): self
 	{
-		return $this->append(null, $text);
+		$this->append(null, ...$text);
+		return $this;
 	}
 
 	/**
