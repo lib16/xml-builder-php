@@ -3,7 +3,6 @@
 namespace Lib16\XML\Tests;
 
 use Lib16\XML\Xml;
-use Lib16\XML\Adhoc;
 
 class Tml extends Xml
 {
