@@ -34,11 +34,19 @@ class XLinkTest extends XmlTestCase
 			],
 			[
 				XLinkXml1::cs('e')->setXLinkType(),
-				'<e xlink:type="simple"/>'
+				'<e/>'
 			],
 			[
 				XLinkXml1::cs('e')->setXLinkType(Type::SIMPLE()),
 				'<e xlink:type="simple"/>'
+			],
+			[
+				XLinkXml1::cs('e')->setXLinkHref('image.jpg'),
+				'<e xlink:href="image.jpg"/>'
+			],
+			[
+				XLinkXml1::cs('e')->setXLinkHref(null),
+				'<e/>'
 			],
 			[
 				XLinkXml1::cs('e')->setXLinkShow(Show::EMBED()),
@@ -61,6 +69,10 @@ class XLinkTest extends XmlTestCase
 				'<e xlink:show="none"/>'
 			],
 			[
+				XLinkXml1::cs('e')->setXLinkShow(null),
+				'<e/>'
+			],
+			[
 				XLinkXml1::cs('e')->setXLinkActuate(Actuate::ONLOAD()),
 				'<e xlink:actuate="onLoad"/>'
 			],
@@ -75,6 +87,10 @@ class XLinkTest extends XmlTestCase
 			[
 				XLinkXml1::cs('e')->setXLinkActuate(Actuate::NONE()),
 				'<e xlink:actuate="none"/>'
+			],
+			[
+				XLinkXml1::cs('e')->setXLinkActuate(null),
+				'<e/>'
 			],
 		];
 	}

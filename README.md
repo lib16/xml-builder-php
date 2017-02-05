@@ -7,7 +7,7 @@ lib16 XML Builder is a PHP 7 library for creating XML documents.
 Add the following to your project's `composer.json` file:
 ```json
 "require": {
-    "lib16/xml": "^1.0"
+    "lib16/xml": "~1.1.4"
 }
 ```
 

@@ -14,36 +14,35 @@ trait XLink
 
 	public function setXLinkType(Type $type = null): self
 	{
-		$type = $type ?? Type::SIMPLE;
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':type', $type);
 	}
 
-	public function setXLinkHref(string $href): self
+	public function setXLinkHref(string $href = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':href', $href);
 	}
 
-	public function setXLinkRole(string $role): self
+	public function setXLinkRole(string $role = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':role', $role);
 	}
 
-	public function setXLinkArcrole(string $arcrole): self
+	public function setXLinkArcrole(string $arcrole = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':arcrole', $arcrole);
 	}
 
-	public function setXLinkTitle(string $title): self
+	public function setXLinkTitle(string $title = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':title', $title);
 	}
 
-	public function setXLinkShow(Show $show): self
+	public function setXLinkShow(Show $show = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':show', $show);
 	}
 
-	public function setXLinkActuate(Actuate $actuate): self
+	public function setXLinkActuate(Actuate $actuate = null): self
 	{
 		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':actuate', $actuate);
 	}
