@@ -1,5 +1,4 @@
-#lib16/xml-builder-php
-
+# `lib16/xml-builder-php`
 lib16 XML Builder is a PHP 7 library for creating XML documents.
 
 ## Installation with Composer
