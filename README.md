@@ -1,4 +1,4 @@
-#`lib16/xml-builder-php`
+#lib16/xml-builder-php
 
 lib16 XML Builder is a PHP 7 library for creating XML documents.
 
@@ -7,7 +7,7 @@ lib16 XML Builder is a PHP 7 library for creating XML documents.
 Add the following to your project's `composer.json` file:
 ```json
 "require": {
-    "lib16/xml": "~1.1.4"
+    "lib16/xml": "^1.2"
 }
 ```
 
@@ -53,7 +53,7 @@ $myKml->placemark(
         'Cologne Cathedral',
         'Cologne Cathedral is a Roman Catholic cathedral in Cologne, Germany.',
         50.9413, 6.958);
-$myKml->headerfields('cologne-cathedral');
+//$myKml->headerfields('cologne-cathedral');
 print $myKml;
 ```
 
