@@ -19,11 +19,11 @@ class AdhocTest extends XmlTestCase
 	{
 		return [
 			// Adhoc
-			[Aml::cs()->section()->setClass('main'), '<section class="main">'],
-			[Aml::cs()->section()->setClass(null), '<section>'],
-			[Aml::cs()->option()->setSelected(), '<option selected>'],
-			[Aml::cs()->option()->setSelected(true), '<option selected>'],
-			[Aml::cs()->option()->setSelected(false), '<option>'],
+			[Aml::c()->section()->setClass('main'), '<section class="main">'],
+			[Aml::c()->section()->setClass(null), '<section>'],
+			[Aml::c()->option()->setSelected(), '<option selected>'],
+			[Aml::c()->option()->setSelected(true), '<option selected>'],
+			[Aml::c()->option()->setSelected(false), '<option>'],
 			[Aml::em('lorem') . " ipsum" . Aml::br(), '<em>lorem</em> ipsum<br>']
 		];
 	}

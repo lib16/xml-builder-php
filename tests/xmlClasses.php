@@ -6,9 +6,9 @@ use Lib16\XML\Xml;
 
 class Tml extends Xml
 {
-	public static function cs(string $name = null, string $content = null)
+	public static function c(string $name = null, string $content = null): self
 	{
-		return self::createSub($name, $content);
+		return static::create($name, $content);
 	}
 }
 
@@ -21,11 +21,6 @@ class Hml extends Tml
 class Fml extends Tml
 {
 	const FILENAME_EXTENSION = null;
-}
-
-class Lml extends Tml
-{
-	const LINE_BREAK = '';
 }
 
 class Nml extends Tml

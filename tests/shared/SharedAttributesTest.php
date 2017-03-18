@@ -21,7 +21,7 @@ class SharedAttributesTest extends XmlTestCase
 		return [
 			// ClassAttribute
 			[
-				MyXml::cs('e')
+				MyXml::c('e')
 						->setClass('lorem', 'ipsum', 'dolores')
 						->setClass('dolor', 'ipsum', 'lorem'),
 				'<e class="lorem ipsum dolores dolor"/>'
@@ -72,30 +72,30 @@ class SharedAttributesTest extends XmlTestCase
 
 			// MediaAttribute
 			[
-				MyXml::cs('e')->setMedia(Media::SCREEN(), Media::PRINT())->setMedia(),
+				MyXml::c('e')->setMedia(Media::SCREEN(), Media::PRINT())->setMedia(),
 				'<e media="screen,print"/>'
 			],
 
 			// TargetAttribute
-			[MyXml::cs('e')->setTarget('index.html'), '<e target="index.html"/>'],
-			[MyXml::cs('e')->setTarget(Target::BLANK()), '<e target="_blank"/>'],
-			[MyXml::cs('e')->setTarget(Target::PARENT()), '<e target="_parent"/>'],
-			[MyXml::cs('e')->setTarget(Target::SELF()), '<e target="_self"/>'],
-			[MyXml::cs('e')->setTarget(Target::TOP()), '<e target="_top"/>'],
-			[MyXml::cs('e')->setTitle('Lorem Ipsum'), '<e title="Lorem Ipsum"/>'],
+			[MyXml::c('e')->setTarget('index.html'), '<e target="index.html"/>'],
+			[MyXml::c('e')->setTarget(Target::BLANK()), '<e target="_blank"/>'],
+			[MyXml::c('e')->setTarget(Target::PARENT()), '<e target="_parent"/>'],
+			[MyXml::c('e')->setTarget(Target::SELF()), '<e target="_self"/>'],
+			[MyXml::c('e')->setTarget(Target::TOP()), '<e target="_top"/>'],
+			[MyXml::c('e')->setTitle('Lorem Ipsum'), '<e title="Lorem Ipsum"/>'],
 
 			// XmlAttributes
-			[MyXml::cs('e')->setLang('fr'), "<e xml:lang=\"fr\"/>"],
-			[MyXml::cs('e')->setSpace(Space::DEFAULT()), "<e xml:space=\"default\"/>"],
-			[MyXml::cs('e')->setSpace(Space::PRESERVE()), "<e xml:space=\"preserve\"/>"],
-			[MyXml::cs('e')->setBase('http://example.com'), "<e xml:base=\"http://example.com\"/>"],
-			[MyXml::cs('e')->setId('foo'), "<e xml:id=\"foo\"/>"],
+			[MyXml::c('e')->setLang('fr'), "<e xml:lang=\"fr\"/>"],
+			[MyXml::c('e')->setSpace(Space::DEFAULT()), "<e xml:space=\"default\"/>"],
+			[MyXml::c('e')->setSpace(Space::PRESERVE()), "<e xml:space=\"preserve\"/>"],
+			[MyXml::c('e')->setBase('http://example.com'), "<e xml:base=\"http://example.com\"/>"],
+			[MyXml::c('e')->setId('foo'), "<e xml:id=\"foo\"/>"],
 		];
 	}
 
 	public static function table()
 	{
-		$table = MyXml::cs('table');
+		$table = MyXml::c('table');
 		$tr = $table->append('tr');
 		$tr->append('td', 'Foo');
 		$tr->append('td', 'Berlin');
@@ -125,7 +125,7 @@ class SharedAttributesTest extends XmlTestCase
 
 	public static function list()
 	{
-		$list = MyXml::cs('ul');
+		$list = MyXml::c('ul');
 		$list->append('li', 'Berlin');
 		$list->append('li', 'Hamburg');
 		$list->append('li', 'Munich');

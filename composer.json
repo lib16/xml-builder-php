@@ -7,7 +7,7 @@
 	"require": {
 		"php": ">=7.0",
 		"myclabs/php-enum" : "^1.5",
-		"lib16/utils": "^1.0"
+		"lib16/utils": "^1.1"
 	},
 	"autoload": {
 		"psr-4": {

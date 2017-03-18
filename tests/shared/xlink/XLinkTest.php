@@ -33,63 +33,63 @@ class XLinkTest extends XmlTestCase
 				self::XML_DECL . "\n<root xmlns:xlink=\"http://www.w3.org/1999/xlink\"/>"
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkType(),
+				XLinkXml1::c('e')->setXLinkType(),
 				'<e/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkType(Type::SIMPLE()),
+				XLinkXml1::c('e')->setXLinkType(Type::SIMPLE()),
 				'<e xlink:type="simple"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkHref('image.jpg'),
+				XLinkXml1::c('e')->setXLinkHref('image.jpg'),
 				'<e xlink:href="image.jpg"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkHref(null),
+				XLinkXml1::c('e')->setXLinkHref(null),
 				'<e/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(Show::EMBED()),
+				XLinkXml1::c('e')->setXLinkShow(Show::EMBED()),
 				'<e xlink:show="embed"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(Show::NEW()),
+				XLinkXml1::c('e')->setXLinkShow(Show::NEW()),
 				'<e xlink:show="new"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(Show::REPLACE()),
+				XLinkXml1::c('e')->setXLinkShow(Show::REPLACE()),
 				'<e xlink:show="replace"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(Show::OTHER()),
+				XLinkXml1::c('e')->setXLinkShow(Show::OTHER()),
 				'<e xlink:show="other"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(Show::NONE()),
+				XLinkXml1::c('e')->setXLinkShow(Show::NONE()),
 				'<e xlink:show="none"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkShow(null),
+				XLinkXml1::c('e')->setXLinkShow(null),
 				'<e/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkActuate(Actuate::ONLOAD()),
+				XLinkXml1::c('e')->setXLinkActuate(Actuate::ONLOAD()),
 				'<e xlink:actuate="onLoad"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkActuate(Actuate::ONREQUEST()),
+				XLinkXml1::c('e')->setXLinkActuate(Actuate::ONREQUEST()),
 				'<e xlink:actuate="onRequest"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkActuate(Actuate::OTHER()),
+				XLinkXml1::c('e')->setXLinkActuate(Actuate::OTHER()),
 				'<e xlink:actuate="other"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkActuate(Actuate::NONE()),
+				XLinkXml1::c('e')->setXLinkActuate(Actuate::NONE()),
 				'<e xlink:actuate="none"/>'
 			],
 			[
-				XLinkXml1::cs('e')->setXLinkActuate(null),
+				XLinkXml1::c('e')->setXLinkActuate(null),
 				'<e/>'
 			],
 		];

@@ -21,9 +21,9 @@ class Xml
 	const XML_DECLARATION_ENABLED = true;
 	const VERTICAL_ATTRIBUTES_ENABLED = false;
 
-	const CHARACTER_ENCODING = 'UTF-8';
-	const LINE_BREAK = "\n";
-	const INDENTATION = "\t";
+	protected static $characterEncoding = 'UTF-8';
+	protected static $lineBreak = "\n";
+	protected static $indentation = "\t";
 
 	protected $name;
 	protected $content;
@@ -57,18 +57,39 @@ class Xml
 
 	public static function createRoot(string $name = null): self
 	{
-		$class = get_called_class();
-		$root = new $class($name);
+		$root = new static($name);
 		$root->setXmlns();
 		return $root;
 	}
 
-	public static function createSub(string $name = null, $content = null): self
+	public static function create(string $name = null, $content = null): self
 	{
-		$class = get_called_class();
-		$element = new $class($name, $content);
+		$element = new static($name, $content);
 		$element->sub = true;
 		return $element;
+	}
+
+	/**
+	 * @deprecated You better use the <code>create</code> method instead.
+	 */
+	public static function createSub(string $name = null, $content = null): self
+	{
+		return static::create($name, $content);
+	}
+
+	public static function setCharacterEncoding(string $encoding)
+	{
+		self::$characterEncoding = $encoding;
+	}
+
+	public static function setLineBreak(string $lineBreak)
+	{
+		self::$lineBreak = $lineBreak;
+	}
+
+	public static function setIndentation(string $indentation)
+	{
+		self::$indentation = $indentation;
 	}
 
 	/**
@@ -81,15 +102,18 @@ class Xml
 	 */
 	public function append(string $name = null, ...$content): self
 	{
-		$class = get_called_class();
+		if (!empty($this->content)) {
+			$this->children[] = new static(null, $this->content, $this->root, $this);
+			$this->content = null;
+		}
 		if (!count($content)) {
-			$element = new $class($name, null, $this->root, $this);
+			$element = new static($name, null, $this->root, $this);
 			$this->children[] = $element;
 			return $element;
 		}
 		$index = count($this->children);
 		foreach ($content as $content) {
-			$this->children[] = new $class($name, $content, $this->root, $this);
+			$this->children[] = new static($name, $content, $this->root, $this);
 		}
 		return $this->children[$index];
 	}
@@ -194,24 +218,26 @@ class Xml
 		return $instr;
 	}
 
-	public function disableLineBreak(bool $lineBreakDisabled = true): self
+	public function disableTextIndentation(): self
 	{
-		return $this->setOption('lineBreakDisabled', $lineBreakDisabled);
-	}
-
-	public function disableIndentation(bool $indentationDisabled = true): self
-	{
-		return $this->setOption('indentationDisabled', $indentationDisabled);
-	}
-
-	public function disableTextIndentation(bool $textIndentationDisabled = true): self
-	{
-		return $this->setOption('textIndentationDisabled', $textIndentationDisabled);
+		return $this->setOption('textIndentationDisabled', true);
 	}
 
 	public function attrib(string $name, $value = true): self
 	{
 		$this->attributes->set($name, $value);
+		return $this;
+	}
+
+	public function boolAttrib(string $name, $value, string $comparisonAttribute = null): self
+	{
+		if (!is_bool($value) && $this->attributes->get($comparisonAttribute) === false) {
+			foreach ($this->children as $child) {
+				$child->boolAttrib($name, $value, $comparisonAttribute);
+			}
+			return $this;
+		}
+		$this->attributes->setBoolean($name, $value, $comparisonAttribute);
 		return $this;
 	}
 
@@ -233,7 +259,7 @@ class Xml
 
 	public function getMarkup(): string
 	{
-		return $this->buildMarkup(null);
+		return ltrim($this->buildMarkup(null), self::$lineBreak);
 	}
 
 	/**
@@ -260,7 +286,7 @@ class Xml
 	 */
 	public static function getContentTypeHeaderfield()
 	{
-		return 'Content-Type: ' . static::MIME_TYPE . '; charset=' . static::CHARACTER_ENCODING;
+		return 'Content-Type: ' . static::MIME_TYPE . '; charset=' . self::$characterEncoding;
 	}
 
 	public static function headerfields(string $filename = null)
@@ -289,61 +315,61 @@ class Xml
 
 		$markup = '';
 		if ($this->isRoot() && !$this->sub) {
-			$markup .= $this->head($v);
+			$markup .= $this->buildHead($v);
 		}
 		if (!empty($this->children)) {
-			$markup .= $this->container($v);
+			$markup .= $this->buildContainer($v);
 		}
 		else {
-			$markup .= $this->element($v);
+			$markup .= $this->buildElement($v);
 		}
 		return $markup;
 	}
 
-	private function head(\stdClass $v): string
+	private function buildHead(\stdClass $v): string
 	{
 		$markup = '';
 		if (static::XML_DECLARATION_ENABLED) {
-			$markup .= ProcessingInstruction::create('xml')
+			$markup .= $v->whitespace . ProcessingInstruction::create('xml')
 					->attrib('version', static::XML_VERSION)
-					->attrib('encoding', static::CHARACTER_ENCODING). $v->lineBr;
+					->attrib('encoding', self::$characterEncoding);
 		}
 		if (!is_null($this->instructions)) {
 			foreach ($this->instructions as $instruction) {
-				$markup .= $instruction . $v->lineBr;
+				$markup .= $v->whitespace . $instruction;
 			}
 		}
 		if (!empty(static::DOCTYPE)) {
-			$markup .= static::DOCTYPE . $v->lineBr;
+			$markup .= $v->whitespace . static::DOCTYPE;
 		}
 		return $markup;
 	}
 
-	private function container(\stdClass $v): string
+	private function buildContainer(\stdClass $v): string
 	{
 		$markup = '';
 		if ($v->hasTags) {
-			$markup .= $v->indentation . $this->openingTag($v) . $v->lineBr;
+			$markup .= $v->whitespace . $this->openingTag($v);
 		}
 		if ($this->cdata) {
-			$markup .= $v->indentation . self::CDATA_START . $v->lineBr;
+			$markup .= $v->whitespace . self::CDATA_START;
 		}
 		if (!empty($v->content)) {
-			$markup .= $v->newIndentation . $v->content . $v->lineBr;
+			$markup .= $v->whitespace . $v->content;
 		}
 		foreach ($this->children as $child) {
-			$markup .= $child->buildMarkup($v) . $v->lineBr;
+			$markup .= $child->buildMarkup($v);
 		}
 		if ($this->cdata) {
-			$markup .= $v->indentation . self::CDATA_STOP . $v->lineBr;
+			$markup .= $v->whitespace . self::CDATA_STOP;
 		}
 		if ($v->hasTags) {
-			$markup .= $v->indentation . $this->closingTag($v) . $v->lineBr;
+			$markup .= $v->whitespace . $this->closingTag($v);
 		}
-		return rtrim($markup, $v->lineBr);
+		return $markup;
 	}
 
-	private function element(\stdClass $v): string
+	private function buildElement(\stdClass $v): string
 	{
 		$markup = '';
 		$hasContent = static::HTML_MODE_ENABLED ? $v->content !== null : $v->content != '';
@@ -352,15 +378,15 @@ class Xml
 				if ($this->cdata) {
 					$v->content = self::CDATA_START . $v->content . self::CDATA_STOP;
 				}
-				$markup .= $v->indentation .
-						$this->openingTag($v) . $v->content . $this->closingTag($v);
+				$markup .= $v->whitespace .
+				$this->openingTag($v) . $v->content . $this->closingTag($v);
 			}
 			else {
-				$markup .= $v->indentation . $this->standaloneTag($v);
+				$markup .= $v->whitespace . $this->standaloneTag($v);
 			}
 		}
 		else if ($hasContent) {
-			$markup .= $v->indentation . $v->content;
+			$markup .= $v->whitespace . $v->content;
 		}
 		return $markup;
 	}
@@ -380,38 +406,48 @@ class Xml
 		return '<' . $v->name . $v->attributes . (static::HTML_MODE_ENABLED ? '>' : '/>');
 	}
 
-	private function calculateVars(\stdClass $vars = null)
+	private function calculateVars(\stdClass $parentVars = null)
 	{
-		$v = new \stdClass();
+		$vars = new \stdClass();
+		$vars->hasTags = !empty($this->name);
 
-		$v->indentation = $vars->newIndentation ?? '';
-		$v->newIndentation = $v->indentation;
-
-		$v->lineBr = isset($this->options->lineBreakDisabled)
-				? ($this->options->lineBreakDisabled ? '' : static::LINE_BREAK)
-				: ($vars->lineBr ?? static::LINE_BREAK);
-		$v->indent = isset($this->options->indentationDisabled)
-				? ($this->options->indentationDisabled ? '' : static::INDENTATION)
-				: ($vars->indent ?? static::INDENTATION);
-		$v->textIndentDisabled = isset($this->options->textIndentationDisabled)
-				? $this->options->textIndentationDisabled
-				: ($vars->textIndentDisabled ?? false);
-
-		$indent = $v->lineBr == '' ? '' : $v->indent;
-
-		$v->content = !empty($this->content) && $v->lineBr != '' && !$v->textIndentDisabled
-				? str_replace($v->lineBr, $v->lineBr . $v->indentation, $this->content)
-				: $this->content;
-		$v->hasTags = !empty($this->name);
-		if ($v->hasTags) {
-			$v->newIndentation .= $indent;
-			$v->attributes = $this->attributes->getMarkup(static::HTML_MODE_ENABLED,
-					static::VERTICAL_ATTRIBUTES_ENABLED && $v->lineBr != ''
-					? $v->lineBr . $v->indentation . $indent : ' ');
-			$v->name = empty(static::NAMESPACE_PREFIX)
-					? $this->name : static::NAMESPACE_PREFIX . ':' . $this->name;
+		if (isset($parentVars)) {
+			$vars->whitespace = $parentVars->whitespace;
+			if ($this->parent->name != '' && $vars->whitespace != '') {
+				$vars->whitespace .= self::$indentation;
+			}
+		}
+		else {
+			$vars->whitespace = self::$lineBreak;
 		}
 
-		return $v;
+		if (isset($this->options->textIndentationDisabled)) {
+			$vars->textIndentDisabled = true;
+		}
+		else if (isset($parentVars)) {
+			$vars->textIndentDisabled = $parentVars->textIndentDisabled;
+		}
+		else {
+			$vars->textIndentDisabled = false;
+		}
+
+		if (!empty($this->content) && $vars->whitespace != '' && !$vars->textIndentDisabled) {
+			$vars->content = str_replace(self::$lineBreak, $vars->whitespace, $this->content);
+		}
+		else {
+			$vars->content = $this->content;
+		}
+
+		if ($vars->hasTags) {
+			$vars->attributes = $this->attributes->getMarkup(
+					static::HTML_MODE_ENABLED,
+					static::VERTICAL_ATTRIBUTES_ENABLED && $vars->whitespace != ''
+					? $vars->whitespace . self::$indentation . self::$indentation
+					: ' ');
+			$vars->name = empty(static::NAMESPACE_PREFIX)
+					? $this->name
+					: static::NAMESPACE_PREFIX . ':' . $this->name;
+		}
+		return $vars;
 	}
 }

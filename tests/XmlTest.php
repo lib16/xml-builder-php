@@ -14,38 +14,38 @@ class XmlTest extends XmlTestCase
 	public function provider(): array
 	{
 		return [
-			[Tml::cs()->append(null), ''],
-			[Tml::cs()->append(''), ''],
-			[Tml::cs()->append(null, 'content'), 'content'],
-			[Tml::cs()->append('', 'content'), 'content'],
-			[Tml::cs()->append('e'), '<e/>'],
-			[Tml::cs()->append('e', ''), '<e/>'],
-			[Tml::cs()->append('e', 'content'), '<e>content</e>'],
-			[Tml::cs()->append('e'), '<e/>'],
-			[Tml::cs()->append('e', ...[]), '<e/>'],
+			[Tml::c()->append(null), ''],
+			[Tml::c()->append(''), ''],
+			[Tml::c()->append(null, 'content'), 'content'],
+			[Tml::c()->append('', 'content'), 'content'],
+			[Tml::c()->append('e'), '<e/>'],
+			[Tml::c()->append('e', ''), '<e/>'],
+			[Tml::c()->append('e', 'content'), '<e>content</e>'],
+			[Tml::c()->append('e'), '<e/>'],
+			[Tml::c()->append('e', ...[]), '<e/>'],
 
 			// append() htmlMode
-			[Hml::cs()->append(null), ''],
-			[Hml::cs()->append(''), ''],
-			[Hml::cs()->append(null, 'content'), 'content'],
-			[Hml::cs()->append('', 'content'), 'content'],
-			[Hml::cs()->append('e'), '<e>'],
-			[Hml::cs()->append('e', ''), '<e></e>'],
-			[Hml::cs()->append('e', 'content'), '<e>content</e>'],
+			[Hml::c()->append(null), ''],
+			[Hml::c()->append(''), ''],
+			[Hml::c()->append(null, 'content'), 'content'],
+			[Hml::c()->append('', 'content'), 'content'],
+			[Hml::c()->append('e'), '<e>'],
+			[Hml::c()->append('e', ''), '<e></e>'],
+			[Hml::c()->append('e', 'content'), '<e>content</e>'],
 
 			// append(): multiple content
 			[
-				Lml::cs()
+				Tml::c()
 						->append('e', 'lorem', 'ipsum', 'dolor')
 						->setAttributes((new Attributes())->set('foo', 'bar')),
-				'<e foo="bar">lorem</e><e>ipsum</e><e>dolor</e>'
+				"<e foo=\"bar\">lorem</e>\n<e>ipsum</e>\n<e>dolor</e>"
 			],
 
 			// append(): indentation
-			[Tml::cs()->append('')->append('e'), '<e/>'],
+			[Tml::c()->append('')->append('e'), '<e/>'],
 			[
 				function() {
-					$xml = Tml::cs();
+					$xml = Tml::c();
 					$xml->append(null, 'content 1');
 					$xml->append('e', 'content 2');
 					$xml->append(null, 'content 3');
@@ -57,7 +57,7 @@ class XmlTest extends XmlTestCase
 			],
 			[
 				function() {
-					$xml = Tml::cs();
+					$xml = Tml::c();
 					$xml->append('e')->append('e', '1.1');
 					$xml->append('e')->append('e', '2.1')->getParent()->append('e', '2.2');
 					return $xml;
@@ -65,7 +65,7 @@ class XmlTest extends XmlTestCase
 				"<e>\n\t<e>1.1</e>\n</e>\n<e>\n\t<e>2.1</e>\n\t<e>2.2</e>\n</e>"
 			],
 			[
-				Tml::cs()
+				Tml::c()
 						->append('e', '1')
 						->append('e', '1.1')->getParent()
 						->append('e', '1.2'),
@@ -74,18 +74,18 @@ class XmlTest extends XmlTestCase
 
 			// appendText(), comment()
 			[
-				Tml::cs()
+				Tml::c()
 						->append('e')->getParent()
 						->comment('comment')
 						->append('f', 'content 1')->appendText('content 2'),
 				"<e/>\n<!-- comment -->\n<f>\n\tcontent 1\n\tcontent 2\n</f>"
 			],
-			[Tml::cs()->append('e', '')->appendText('content'), "<e>\n\tcontent\n</e>"],
-			[Tml::cs('e')->appendText('one')->appendText('two'), "<e>\n\tone\n\ttwo\n</e>"],
-			[Tml::cs('e')->appendText('one', 'two'), "<e>\n\tone\n\ttwo\n</e>"],
+			[Tml::c()->append('e', '')->appendText('content'), "<e>\n\tcontent\n</e>"],
+			[Tml::c('e')->appendText('one')->appendText('two'), "<e>\n\tone\n\ttwo\n</e>"],
+			[Tml::c('e')->appendText('one', 'two'), "<e>\n\tone\n\ttwo\n</e>"],
 			[
 				function() {
-					$xml = TML::cs('section')->append('div');
+					$xml = Tml::c('section')->append('div');
 					$xml->append('p', MULTILINE);
 					$xml->append('p')->appendText(MULTILINE);
 					return $xml;
@@ -106,14 +106,14 @@ class XmlTest extends XmlTestCase
 			[
 				Hml::createRoot('e')
 						->setAttributes((new Attributes())->set('a', true))
-						->inject(Tml::cs()->append('f')->getRoot()),
+						->inject(Tml::c()->append('f')->getRoot()),
 				"<e a>\n\t<f/>\n</e>"
 			],
 
 			// getChild()
 			[
 				function()  {
-					$xml = Tml::cs('p');
+					$xml = Tml::c('p');
 					$xml->append('c', 'one', 'two', 'three');
 					return $xml->getChild(1)->getMarkup();
 				},
@@ -122,8 +122,8 @@ class XmlTest extends XmlTestCase
 
 			// countChildElements()
 			[
-				function()  {
-					$xml = Tml::cs('p');
+				function() {
+					$xml = Tml::c('p');
 					$xml->append('c', 'one', 'two', 'three');
 					return 'count: ' . $xml->countChildElements();
 				},
@@ -132,72 +132,72 @@ class XmlTest extends XmlTestCase
 
 			// getParent()
 			[
-				Lml::cs('e')->append('f')->append('g')->getParent()->getMarkup(),
-				'<f><g/></f>'
+				Tml::c('e')->append('f')->append('g')->getParent()->getMarkup(),
+				"<f>\n\t<g/>\n</f>"
 			],
 			[
-				Lml::cs('e')->append('f')->append('g')->append('h')->getParent(2)->getMarkup(),
-				'<f><g><h/></g></f>'
+				Tml::c('e')->append('f')->append('g')->append('h')->getParent(2)->getMarkup(),
+				"<f>\n\t<g>\n\t\t<h/>\n\t</g>\n</f>"
 			],
 			[
-				Lml::cs('e')->append('f')->append('g')->append('h')->getParent(3)->getMarkup(),
-				'<e><f><g><h/></g></f></e>'
+				Tml::c('e')->append('f')->append('g')->append('h')->getParent(3)->getMarkup(),
+				"<e>\n\t<f>\n\t\t<g>\n\t\t\t<h/>\n\t\t</g>\n\t</f>\n</e>"
 			],
 			[
-				Lml::cs('e')->append('f')->append('g')->append('h')->getParent(10),
+				Tml::c('e')->append('f')->append('g')->append('h')->getParent(10),
 				null
 			],
 			[
-				Lml::cs('e')
+				Tml::c('e')
 						->append('f')
-						->inject(Lml::cs('g')->append('h')->getParent())
+						->inject(Tml::c('g')->append('h')->getParent())
 						->getParent(2)
 						->getMarkup(),
-				'<e><f><g><h/></g></f></e>'
+				"<e>\n\t<f>\n\t\t<g>\n\t\t\t<h/>\n\t\t</g>\n\t</f>\n</e>"
 			],
 
 			// getRoot()
 			[
-				Lml::cs('e')->append('f')->append('g')->append('h')->getRoot()->getMarkup(),
-				'<e><f><g><h/></g></f></e>'
+				Tml::c('e')->append('f')->append('g')->append('h')->getRoot()->getMarkup(),
+				"<e>\n\t<f>\n\t\t<g>\n\t\t\t<h/>\n\t\t</g>\n\t</f>\n</e>"
 			],
 			[
 				function()  {
-					$e1 = Tml::cs('r1')->disableLineBreak()->append('e1');
-					$e2 = Hml::cs('r2')->append('e2');
+					$e1 = Tml::c('r1')->append('e1');
+					$e2 = Hml::c('r2')->append('e2');
 					$e1->inject($e2->getRoot());
 					return $e2->getRoot()->getMarkup();
 				},
-				'<r1><e1><r2><e2></r2></e1></r1>'
+				"<r1>\n\t<e1>\n\t\t<r2>\n\t\t\t<e2>\n\t\t</r2>\n\t</e1>\n</r1>"
 			],
 
 			// cdata()
-			[Tml::cs()->append('e')->cdata(), '<e/>'],
-			[Tml::cs()->append('e', 'content')->cdata(), '<e><![CDATA[content]]></e>'],
+			[Tml::c()->append('e')->cdata(), '<e/>'],
+			[Tml::c()->append('e', 'content')->cdata(), '<e><![CDATA[content]]></e>'],
 			[
-				Tml::cs()->append('e')->cdata()->append('f', 'content'),
+				Tml::c()->append('e')->cdata()->append('f', 'content'),
 				"<e>\n<![CDATA[\n\t<f>content</f>\n]]>\n</e>"
 			],
 
 			// setXmlns()
 			[
-				Tml::cs('r')->setXmlns('http://example->com/foo', 'foo'),
+				Tml::c('r')->setXmlns('http://example->com/foo', 'foo'),
 				"<r xmlns:foo=\"http://example->com/foo\"/>"
 			],
 			[
-				Tml::cs('r')->setXmlns('http://example->com/foo', ''),
+				Tml::c('r')->setXmlns('http://example->com/foo', ''),
 				"<r xmlns=\"http://example->com/foo\"/>"
 			],
 			[
-				Tml::cs('r')->setXmlns('http://example->com/foo'),
+				Tml::c('r')->setXmlns('http://example->com/foo'),
 				"<r xmlns=\"http://example->com/foo\"/>"
 			],
 			[
-				Tml::cs('r')->setXmlns(),
+				Tml::c('r')->setXmlns(),
 				'<r/>'
 			],
 			[
-				Nml::cs()->append('r')->setXmlns(),
+				Nml::c()->append('r')->setXmlns(),
 				'<r xmlns="' . Nml::XML_NAMESPACE . '"/>'
 			],
 
@@ -213,60 +213,105 @@ class XmlTest extends XmlTestCase
 				self::XML_DECL . "\n<?target1 content ?>\n<?target2 attrib=\"value\" ?>\n" .
 				Dml::DOCTYPE . "\n<txml xmlns=\"" . Nml::XML_NAMESPACE . "\"/>"
 			],
-			[Tml::cs()->addProcessingInstruction('target', '')->getMarkup(), '<?target ?>'],
+			[Tml::c()->addProcessingInstruction('target', '')->getMarkup(), '<?target ?>'],
 			[Xml::createRoot('e'), self::XML_DECL . "\n<e/>"],
 
-			// disableLineBreak(), disableIndentation(), disableTextIndentation()
+			// setCharacterEncoding() setLineBreak(), setIndentation()
 			[
-				Tml::cs('e')
-						->disableLineBreak()->append('f')
-						->disableLineBreak(false)->append('g'),
-				"<e><f>\n\t<g/>\n</f></e>"
+				function() {
+					Xml::setCharacterEncoding('ISO-8859-15');
+					Xml::setLineBreak('');
+					Xml::setIndentation('    ');
+					$xml = Xml::createRoot('r')->append('e')->getRoot()->getMarkup();
+					Xml::setCharacterEncoding('UTF-8');
+					Xml::setLineBreak("\n");
+					Xml::setIndentation("\t");
+					return $xml;
+				},
+				'<?xml version="1.0" encoding="ISO-8859-15" ?><r><e/></r>'
 			],
 			[
-				Tml::cs('e')
-						->disableIndentation()->append('f')
-						->disableIndentation(false)->append('g'),
-				"<e>\n<f>\n\t<g/>\n</f>\n</e>"
+				function() {
+					Dml::setCharacterEncoding('ISO-8859-15');
+					Dml::setLineBreak("\r");
+					Dml::setIndentation('    ');
+					$xml = Dml::createRoot('r')->append('e')->getRoot()->getMarkup();
+					Xml::setCharacterEncoding('UTF-8');
+					Xml::setLineBreak("\n");
+					Xml::setIndentation("\t");
+					return $xml;
+				},
+				"<?xml version=\"1.0\" encoding=\"ISO-8859-15\" ?>\r" . Dml::DOCTYPE .
+				"\r<r>\r    <e/>\r</r>"
 			],
+
+
+			// disableTextIndentation()
 			[
-				Tml::cs('e')->disableLineBreak()->append('f')->append('g', 'a', 'b'),
-				"<e><f><g>a</g><g>b</g></f></e>"
-			],
-			[
-				Tml::cs()
+				Tml::c()
 						->append('e')->appendText(MULTILINE)->getRoot()
 						->append('f')->disableTextIndentation()->appendText(MULTILINE),
 				"<e>\n\tlorem\n\tipsum\n\tdolor\n\tsit\n</e>\n" .
 				"<f>\n\tlorem\nipsum\ndolor\nsit\n</f>"
 			],
 			[
-				Tml::cs('e')
+				Tml::c('e')
 						->append('f', MULTILINE)->getParent()
 						->append('g', MULTILINE)->disableTextIndentation(),
 				"<e>\n\t<f>lorem\n\tipsum\n\tdolor\n\tsit</f>" .
 				"\n\t<g>lorem\nipsum\ndolor\nsit</g>\n</e>"
 			],
-			[ // combined
-				Tml::cs('e')
-						->disableTextIndentation()
-						->disableIndentation()
-						->append('f', MULTILINE),
-				"<e>\n<f>lorem\nipsum\ndolor\nsit</f>\n</e>"
-			],
 
 			// attrib()
-			[Tml::cs('e')->attrib('a', 'foo'),  '<e a="foo"/>'],
-			[Tml::cs('e')->attrib('a', ''),     '<e a=""/>'],
-			[Tml::cs('e')->attrib('a', null),   '<e/>'],
-			[Tml::cs('e')->attrib('a'), '<e a="a"/>'],
-			[Tml::cs('e')->attrib('a', true), '<e a="a"/>'],
-			[Tml::cs('e')->attrib('a', false), '<e/>'],
-			[Hml::cs('e')->attrib('a', true), '<e a>'],
-			[Hml::cs('e')->attrib('a', false), '<e>'],
-			[Tml::cs('e')->attrib('a', Media::ALL()), '<e a="all"/>'],
-			[Tml::cs('e')->attrib('a', 1920), '<e a="1920"/>'],
-			[Tml::cs('e')->attrib('a', 1.23456), '<e a="1.23456"/>'],
+			[Tml::c('e')->attrib('a', 'foo'),  '<e a="foo"/>'],
+			[Tml::c('e')->attrib('a', ''),     '<e a=""/>'],
+			[Tml::c('e')->attrib('a', null),   '<e/>'],
+			[Tml::c('e')->attrib('a'), '<e a="a"/>'],
+			[Tml::c('e')->attrib('a', true), '<e a="a"/>'],
+			[Tml::c('e')->attrib('a', false), '<e/>'],
+			[Hml::c('e')->attrib('a', true), '<e a>'],
+			[Hml::c('e')->attrib('a', false), '<e>'],
+			[Tml::c('e')->attrib('a', Media::ALL()), '<e a="all"/>'],
+			[Tml::c('e')->attrib('a', 1920), '<e a="1920"/>'],
+			[Tml::c('e')->attrib('a', 1.23456), '<e a="1.23456"/>'],
+
+			// boolAttrib()
+			[
+				Tml::c('e')->attrib('e', 'foo')
+						->append('f')->attrib('f', 'bar')->getParent()
+						->append('f')->attrib('f', 'baz')->getParent()
+						->append('f')->attrib('f', 'foo')->getParent()
+						->boolAttrib('bool', 'baz', 'f'),
+				"<e e=\"foo\">" .
+				"\n\t<f f=\"bar\"/>" .
+				"\n\t<f f=\"baz\" bool=\"bool\"/>" .
+				"\n\t<f f=\"foo\"/>" .
+				"\n</e>"
+			],
+			[
+				Tml::c('e')->attrib('e', 'foo')
+						->append('f')->attrib('f', 'bar')->getParent()
+						->append('f')->attrib('f', 'baz')->getParent()
+						->append('f')->attrib('f', 'foo')->getParent()
+						->boolAttrib('bool', ['zab', 'foo', 'bar'], 'f'),
+				"<e e=\"foo\">" .
+				"\n\t<f f=\"bar\" bool=\"bool\"/>" .
+				"\n\t<f f=\"baz\"/>" .
+				"\n\t<f f=\"foo\" bool=\"bool\"/>" .
+				"\n</e>"
+			],
+			[
+				Tml::c('e')->attrib('e', 'foo')
+						->append('f')->attrib('f', 'bar')->getParent()
+						->append('f')->attrib('f', 'baz')->getParent()
+						->append('f')->attrib('f', 'foo')->getParent()
+						->boolAttrib('bool', true),
+				"<e e=\"foo\" bool=\"bool\">" .
+				"\n\t<f f=\"bar\"/>" .
+				"\n\t<f f=\"baz\"/>" .
+				"\n\t<f f=\"foo\"/>" .
+				"\n</e>"
+			],
 
 			// getContentDispositionHeaderfield(), getContentTypeHeaderfield()
 			[

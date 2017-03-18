@@ -42,17 +42,49 @@ class Attributes
 	}
 
 	/**
-	 * Sets a boolean attribute by comparing one or more values
+	 * Sets a boolean attribute, if applicable by comparing one or more values
 	 * with the value of another attribute.
 	 *
 	 * Helpful for attributes like <code>selected</code> or <code>checked</code> in HTML.
 	 *
 	 * @param  string  $name
+	 * @param  mixed   $value                Value(s) to compare or boolean.
 	 * @param  string  $comparisonAttribute  Name of the attribute to compare with.
-	 * @param  string  ...$values            Values to compare.
 	 */
-	public function setByComparison(string $name,
-			string $comparisonAttribute, ...$values): self
+	public function setBoolean(string $name, $value, string $comparisonAttribute = null): self
+	{
+		if (is_bool($value)) {
+			return $this->set($name, $value);
+		}
+		$comparisonValue = $this->attributes[$comparisonAttribute];
+		if (is_null($comparisonValue)) {
+			return $this->set($name, false);
+		}
+		if (!is_array($value)) {
+			$value = [$value];
+		}
+		foreach ($value as $value) {
+			if (is_null($value)) {
+				continue;
+			}
+			if ($value == $comparisonValue) {
+				return $this->set($name, true);
+			}
+		}
+		return $this->set($name, false);
+	}
+
+	/**
+	 * Sets a boolean attribute by comparing one or more values
+	 * with the value of another attribute.
+	 *
+	 * Helpful for attributes like <code>selected</code> or <code>checked</code> in HTML.
+	 * @deprecated
+	 * @param  string  $name
+	 * @param  string  $comparisonAttribute  Name of the attribute to compare with.
+	 * @param  mixed   ...$values            Values to compare.
+	 */
+	public function setByComparison(string $name, string $comparisonAttribute, ...$values): self
 	{
 		$compareTo = $this->attributes[$comparisonAttribute];
 		if (is_null($compareTo)) {
@@ -146,6 +178,11 @@ class Attributes
 	{
 		$this->attributes = $attributes->attributes;
 		return $this;
+	}
+
+	public function get(string $name)
+	{
+		return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : false;
 	}
 
 	/**
