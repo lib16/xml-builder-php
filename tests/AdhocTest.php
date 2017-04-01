@@ -24,7 +24,11 @@ class AdhocTest extends XmlTestCase
 			[Aml::c()->option()->setSelected(), '<option selected>'],
 			[Aml::c()->option()->setSelected(true), '<option selected>'],
 			[Aml::c()->option()->setSelected(false), '<option>'],
-			[Aml::em('lorem') . " ipsum" . Aml::br(), '<em>lorem</em> ipsum<br>']
+			[Aml::em('lorem') . " ipsum" . Aml::br(), '<em>lorem</em> ipsum<br>'],
+			[
+				Aml::article()->setClass('overview')->header()->h1('PHP'),
+				"<article class=\"overview\">\n\t<header>\n\t\t<h1>PHP</h1>\n\t</header>\n</article>"
+			]
 		];
 	}
 }

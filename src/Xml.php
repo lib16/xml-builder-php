@@ -35,7 +35,7 @@ class Xml
 	protected $root;
 	protected $parent;
 
-	protected $options;
+	protected $flags;
 	protected $sub;
 
 	/**
@@ -218,9 +218,14 @@ class Xml
 		return $instr;
 	}
 
+	public function disableLineBreak(): self
+	{
+		return $this->setFlag('lineBreakDisabled');
+	}
+
 	public function disableTextIndentation(): self
 	{
-		return $this->setOption('textIndentationDisabled', true);
+		return $this->setFlag('textIndentationDisabled');
 	}
 
 	public function attrib(string $name, $value = true): self
@@ -302,10 +307,10 @@ class Xml
 		return $this->root == $this;
 	}
 
-	private function setOption(string $option, bool $value): self
+	private function setFlag(string $flagName): self
 	{
-		$this->options = $this->options ?? new \stdClass();
-		$this->options->$option = $value;
+		$this->flags = $this->flags ?? [];
+		$this->flags[$flagName] = true;
 		return $this;
 	}
 
@@ -352,19 +357,16 @@ class Xml
 			$markup .= $v->whitespace . $this->openingTag($v);
 		}
 		if ($this->cdata) {
-			$markup .= $v->whitespace . self::CDATA_START;
-		}
-		if (!empty($v->content)) {
-			$markup .= $v->whitespace . $v->content;
+			$markup .= $v->whitespaceCData . self::CDATA_START;
 		}
 		foreach ($this->children as $child) {
 			$markup .= $child->buildMarkup($v);
 		}
 		if ($this->cdata) {
-			$markup .= $v->whitespace . self::CDATA_STOP;
+			$markup .= $v->whitespaceCData . self::CDATA_STOP;
 		}
 		if ($v->hasTags) {
-			$markup .= $v->whitespace . $this->closingTag($v);
+			$markup .= $v->whitespaceContainerEnd . $this->closingTag($v);
 		}
 		return $markup;
 	}
@@ -409,19 +411,8 @@ class Xml
 	private function calculateVars(\stdClass $parentVars = null)
 	{
 		$vars = new \stdClass();
-		$vars->hasTags = !empty($this->name);
 
-		if (isset($parentVars)) {
-			$vars->whitespace = $parentVars->whitespace;
-			if ($this->parent->name != '' && $vars->whitespace != '') {
-				$vars->whitespace .= self::$indentation;
-			}
-		}
-		else {
-			$vars->whitespace = self::$lineBreak;
-		}
-
-		if (isset($this->options->textIndentationDisabled)) {
+		if (isset($this->flags['textIndentationDisabled'])) {
 			$vars->textIndentDisabled = true;
 		}
 		else if (isset($parentVars)) {
@@ -431,6 +422,31 @@ class Xml
 			$vars->textIndentDisabled = false;
 		}
 
+		if (isset($parentVars)) {
+			if (isset($parentVars->lineBreakDisabled)) {
+				$vars->whitespace = '';
+			}
+			else {
+				$vars->whitespace = $parentVars->whitespace;
+				if ($this->parent->name != '' && $vars->whitespace != '') {
+					$vars->whitespace .= self::$indentation;
+				}
+			}
+		}
+		else {
+			$vars->whitespace = self::$lineBreak;
+		}
+
+		if (isset($this->flags['lineBreakDisabled'])) {
+			$vars->lineBreakDisabled = true;
+			$vars->whitespaceContainerEnd = '';
+			$vars->whitespaceCData = '';
+		}
+		else {
+			$vars->whitespaceContainerEnd = $vars->whitespace;
+			$vars->whitespaceCData = $vars->whitespace;
+		}
+
 		if (!empty($this->content) && $vars->whitespace != '' && !$vars->textIndentDisabled) {
 			$vars->content = str_replace(self::$lineBreak, $vars->whitespace, $this->content);
 		}
@@ -438,12 +454,12 @@ class Xml
 			$vars->content = $this->content;
 		}
 
+		$vars->hasTags = !empty($this->name);
 		if ($vars->hasTags) {
-			$vars->attributes = $this->attributes->getMarkup(
-					static::HTML_MODE_ENABLED,
+			$vars->attributes = $this->attributes->getMarkup(static::HTML_MODE_ENABLED,
 					static::VERTICAL_ATTRIBUTES_ENABLED && $vars->whitespace != ''
-					? $vars->whitespace . self::$indentation . self::$indentation
-					: ' ');
+							? $vars->whitespace . self::$indentation . self::$indentation
+							: ' ');
 			$vars->name = empty(static::NAMESPACE_PREFIX)
 					? $this->name
 					: static::NAMESPACE_PREFIX . ':' . $this->name;

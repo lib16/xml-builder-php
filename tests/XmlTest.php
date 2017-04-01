@@ -261,6 +261,19 @@ class XmlTest extends XmlTestCase
 				"<e>\n\t<f>lorem\n\tipsum\n\tdolor\n\tsit</f>" .
 				"\n\t<g>lorem\nipsum\ndolor\nsit</g>\n</e>"
 			],
+			// disableLineBreak()
+			[
+				Tml::c()
+						->append('e')->append('f')->disableLineBreak()
+						->append('g')->append('h'),
+				"<e>\n\t<f><g><h/></g></f>\n</e>"
+			],
+			[
+				Tml::c()
+				->append('e')->append('f')->disableLineBreak()
+				->append('g')->cdata()->appendText("lorem ipsum\ndolor sit"),
+				"<e>\n\t<f><g><![CDATA[lorem ipsum\ndolor sit]]></g></f>\n</e>"
+			],
 
 			// attrib()
 			[Tml::c('e')->attrib('a', 'foo'),  '<e a="foo"/>'],

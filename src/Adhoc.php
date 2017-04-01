@@ -23,9 +23,8 @@ trait Adhoc
 	 *
 	 * @param  string  $method     Start the name of the method with “set” to add an attribute.
 	 * @param  array   $arguments  Expected length is 0 or 1 (content/value).
-	 * @return Xml
 	 */
-	public function __call($method, $arguments)
+	public function __call(string $method, array $arguments): self
 	{
 		if (strpos($method, 'set') === 0) {
 			$method = strtolower(substr($method, 3, strlen($method) - 3));
@@ -38,15 +37,14 @@ trait Adhoc
 	}
 
 	/**
-	 * Generates the markup for an XML element.
+	 * Creates an XML element.
 	 *
 	 * @param  string  $method     Name of the XML element.
 	 * @param  array   $arguments  Expected length is 0 or 1 (content).
-	 * @return string
 	 */
-	public static function __callstatic($method, $arguments)
+	public static function __callstatic(string $method, array $arguments): self
 	{
 		$content = count($arguments) ? $arguments[0] : null;
-		return self::createSub($method, $content);
+		return self::create($method, $content);
 	}
 }
