@@ -1,7 +1,7 @@
-#XML Builder for PHP 7
+# XML Builder for PHP 7
 A library for creating XML documents written in PHP 7.
 
-##Installation with Composer
+## Installation with Composer
 This package is available on [packagist](https://packagist.org/packages/lib16/xml),
 so you can use [Composer](https://getcomposer.org) to install it:
 ```composer require lib16/xml```
