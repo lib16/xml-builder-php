@@ -95,10 +95,7 @@ class Xml
 	/**
 	 * Adds child elements.
 	 *
-	 * @param  string       $name
-	 * @param  string|null  ...$content
-	 *
-	 * @return The first appended element.
+	 * @return  self  The first appended element.
 	 */
 	public function append(string $name = null, ...$content): self
 	{
@@ -116,6 +113,17 @@ class Xml
 			$this->children[] = new static($name, $content, $this->root, $this);
 		}
 		return $this->children[$index];
+	}
+
+	/**
+	 * @return  self  The current element (not the appended).
+	 */
+	public function appendLeaf(string $name, $content = null): self
+	{
+		if (!empty($name) && !empty($content)) {
+			$this->append($name, $content);
+		}
+		return $this;
 	}
 
 	/**
