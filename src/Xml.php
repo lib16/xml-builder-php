@@ -53,6 +53,7 @@ class Xml
 		$this->root = $root ?? $this;
 		$this->parent = $parent;
 		$this->sub = false;
+		$this->children = [];
 	}
 
 	public static function createRoot(string $name = null): self
