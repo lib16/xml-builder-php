@@ -1,5 +1,4 @@
 <?php
-
 namespace Lib16\XML\Shared\XLink;
 
 /**
@@ -7,43 +6,47 @@ namespace Lib16\XML\Shared\XLink;
  */
 trait XLink
 {
-	public function setXLinkNamespace(): self
-	{
-		return $this->setXmlns(XLinkConstants::NAMESPACE, XLinkConstants::NAMESPACE_PREFIX);
-	}
 
-	public function setXLinkType(Type $type = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':type', $type);
-	}
+    public function setXLinkNamespace(): self
+    {
+        return $this->setXmlns(
+            XLinkConstants::NAMESPACE,
+            XLinkConstants::NAMESPACE_PREFIX
+        );
+    }
 
-	public function setXLinkHref(string $href = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':href', $href);
-	}
+    public function setXLinkType(Type $type = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':type', $type);
+    }
 
-	public function setXLinkRole(string $role = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':role', $role);
-	}
+    public function setXLinkHref(string $href = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':href', $href);
+    }
 
-	public function setXLinkArcrole(string $arcrole = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':arcrole', $arcrole);
-	}
+    public function setXLinkRole(string $role = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':role', $role);
+    }
 
-	public function setXLinkTitle(string $title = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':title', $title);
-	}
+    public function setXLinkArcrole(string $arcrole = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':arcrole', $arcrole);
+    }
 
-	public function setXLinkShow(Show $show = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':show', $show);
-	}
+    public function setXLinkTitle(string $title = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':title', $title);
+    }
 
-	public function setXLinkActuate(Actuate $actuate = null): self
-	{
-		return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':actuate', $actuate);
-	}
+    public function setXLinkShow(Show $show = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':show', $show);
+    }
+
+    public function setXLinkActuate(Actuate $actuate = null): self
+    {
+        return $this->attrib(XLinkConstants::NAMESPACE_PREFIX . ':actuate', $actuate);
+    }
 }

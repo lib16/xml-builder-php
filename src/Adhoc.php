@@ -1,5 +1,4 @@
 <?php
-
 namespace Lib16\XML;
 
 /**
@@ -18,33 +17,38 @@ namespace Lib16\XML;
  */
 trait Adhoc
 {
-	/**
-	 * Adds an XML element or attribute, depending on the name of the method.
-	 *
-	 * @param  string  $method     Start the name of the method with “set” to add an attribute.
-	 * @param  array   $arguments  Expected length is 0 or 1 (content/value).
-	 */
-	public function __call(string $method, array $arguments): self
-	{
-		if (strpos($method, 'set') === 0) {
-			$method = strtolower(substr($method, 3, strlen($method) - 3));
-			$value = count($arguments) ? $arguments[0] : true;
-			$this->getAttributes()->set($method, $value);
-			return $this;
-		}
-		$content = count($arguments) ? $arguments[0] : null;
-		return $this->append($method, $content);
-	}
 
-	/**
-	 * Creates an XML element.
-	 *
-	 * @param  string  $method     Name of the XML element.
-	 * @param  array   $arguments  Expected length is 0 or 1 (content).
-	 */
-	public static function __callstatic(string $method, array $arguments): self
-	{
-		$content = count($arguments) ? $arguments[0] : null;
-		return self::create($method, $content);
-	}
+    /**
+     * Adds an XML element or attribute, depending on the name of the method.
+     *
+     * @param string $method
+     *            Start the name of the method with “set” to add an attribute.
+     * @param array $arguments
+     *            Expected length is 0 or 1 (content/value).
+     */
+    public function __call(string $method, array $arguments): self
+    {
+        if (strpos($method, 'set') === 0) {
+            $method = strtolower(substr($method, 3, strlen($method) - 3));
+            $value = count($arguments) ? $arguments[0] : true;
+            $this->getAttributes()->set($method, $value);
+            return $this;
+        }
+        $content = count($arguments) ? $arguments[0] : null;
+        return $this->append($method, $content);
+    }
+
+    /**
+     * Creates an XML element.
+     *
+     * @param string $method
+     *            Name of the XML element.
+     * @param array $arguments
+     *            Expected length is 0 or 1 (content).
+     */
+    public static function __callstatic(string $method, array $arguments): self
+    {
+        $content = count($arguments) ? $arguments[0] : null;
+        return self::create($method, $content);
+    }
 }

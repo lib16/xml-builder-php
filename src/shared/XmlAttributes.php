@@ -1,5 +1,4 @@
 <?php
-
 namespace Lib16\XML\Shared;
 
 /**
@@ -7,26 +6,29 @@ namespace Lib16\XML\Shared;
  */
 trait XmlAttributes
 {
-	/**
-	 * @param  string|null  lang  A BCP 47 language tag. For example "en" or "fr-CA".
-	 */
-	public function setLang(string $lang = null): self
-	{
-		return $this->attrib('xml:lang', $lang);
-	}
 
-	public function setSpace(Space $space = null): self
-	{
-		return $this->attrib('xml:space', $space);
-	}
+    /**
+     *
+     * @param string|null $lang
+     *            A BCP 47 language tag. For example "en" or "fr-CA".
+     */
+    public function setLang(string $lang = null): self
+    {
+        return $this->attrib('xml:lang', $lang);
+    }
 
-	public function setBase(string $base = null): self
-	{
-		return $this->attrib('xml:base', $base);
-	}
+    public function setSpace(Space $space = null): self
+    {
+        return $this->attrib('xml:space', $space);
+    }
 
-	public function setId(string $id = null): self
-	{
-		return $this->attrib('xml:id', $id);
-	}
+    public function setBase(string $base = null): self
+    {
+        return $this->attrib('xml:base', $base);
+    }
+
+    public function setId(string $id = null): self
+    {
+        return $this->attrib('xml:id', $id);
+    }
 }
