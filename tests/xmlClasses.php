@@ -5,7 +5,6 @@ use Lib16\XML\Xml;
 
 class Tml extends Xml
 {
-
     public static function c(string $name = null, string $content = null): self
     {
         return static::create($name, $content);
@@ -42,4 +41,19 @@ class DNml extends Nml
 {
 
     const DOCTYPE = Dml::DOCTYPE;
+}
+
+class TSvg extends Tml
+{
+
+    const XML_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+    const MORE_XML_NAMESPACES = [
+        'xlink' => 'http://www.w3.org/1999/xlink'
+    ];
+}
+
+class Vml extends Tml
+{
+    const VERTICAL_ATTRIBUTES_ENABLED = true;
 }

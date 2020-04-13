@@ -17,14 +17,15 @@ class ProcessingInstructionTest extends TestCase
                 '<?target content ?>'
             ],
             [
-                ProcessingInstruction::create('target')->attrib('attrib1', 'value1')->attrib('attrib2', 'value2'),
+                ProcessingInstruction::create('target')
+                    ->attrib('attrib1', 'value1')
+                    ->attrib('attrib2', 'value2'),
                 '<?target attrib1="value1" attrib2="value2" ?>'
             ]
         ];
     }
 
     /**
-     *
      * @dataProvider provider
      */
     public function test(ProcessingInstruction $actual, string $expected)

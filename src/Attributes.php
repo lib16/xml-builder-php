@@ -57,6 +57,9 @@ class Attributes
         if (is_bool($value)) {
             return $this->set($name, $value);
         }
+        if (is_null($comparisonAttribute)) {
+            return $this->set($name, false);
+        }
         $comparisonValue = $this->attributes[$comparisonAttribute];
         if (is_null($comparisonValue)) {
             return $this->set($name, false);

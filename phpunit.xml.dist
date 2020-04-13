@@ -1,5 +1,5 @@
 <phpunit>
-    <testsuite name="Stringy">
+    <testsuite name="lib16/xml">
         <directory>tests</directory>
     </testsuite>
     <filter>

@@ -282,6 +282,7 @@ class Xml
     ): self {
         if (
             ! is_bool($value)
+            && ! is_null($comparisonAttribute)
             && $this->attributes->get($comparisonAttribute) === false
         ) {
             foreach ($this->children as $child) {
