@@ -1,8 +1,6 @@
 <?php
 namespace Lib16\XML\Tests\Shared;
 
-require_once 'vendor/autoload.php';
-
 use Lib16\Utils\Enums\CSS\Media;
 use Lib16\XML\Shared\ {
     ClassAttribute,

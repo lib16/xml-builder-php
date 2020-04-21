@@ -10,11 +10,9 @@ use Lib16\XML\Shared\XLink\ {
     Show,
     Type
 };
-use Lib16\XML\Tests\ {
-    XmlTestCase,
-    Tml
-};
+use Lib16\XML\Tests\Tml;
 use PHPUnit\Framework\TestCase;
+use const Lib16\XML\Tests\XML_START;
 
 class XLinkXml1 extends Tml
 {
@@ -41,8 +39,7 @@ class XLinkTest extends TestCase
     public function testXLink()
     {
         $this->assertEquals(
-            XmlTestCase::XML_DECL . '
-<root xmlns:xlink="http://www.w3.org/1999/xlink"/>',
+            XML_START . '<root xmlns:xlink="http://www.w3.org/1999/xlink"/>',
             XLinkXml1::createRoot('root')
         );
     }
@@ -50,8 +47,7 @@ class XLinkTest extends TestCase
     public function testSetXLinkNamespace()
     {
         $this->assertEquals(
-            XmlTestCase::XML_DECL . '
-<root xmlns:xlink="http://www.w3.org/1999/xlink"/>',
+            XML_START . '<root xmlns:xlink="http://www.w3.org/1999/xlink"/>',
             XLinkXml2::createRoot('root')->setXLinkNamespace()
         );
     }

@@ -1,8 +1,6 @@
 <?php
 namespace Lib16\XML\Tests;
 
-require_once 'vendor/autoload.php';
-
 use Lib16\Utils\Enums\CSS\Media;
 use Lib16\XML\ {
     Xml,
@@ -14,8 +12,6 @@ const MULTILINE = "lorem\nipsum\ndolor\nsit";
 
 class XmlTest extends TestCase
 {
-
-
     /**
      * @dataProvider appendProvider
      */
@@ -345,15 +341,12 @@ class XmlTest extends TestCase
 
     public function testCreateRoot2()
     {
-        $this->assertEquals(
-            XmlTestCase::XML_DECL . "\n<e/>",
-            Tml::createRoot('e')
-        );
+        $this->assertEquals(XML_DECL . "\n<e/>", Tml::createRoot('e'));
     }
 
     public function testAddProcessingInstruction1()
     {
-        $expected = XmlTestCase::XML_DECL
+        $expected = XML_DECL
             . "\n<?target1 content ?>\n<?target2 attrib=\"value\" ?>\n"
             . Dml::DOCTYPE . "\n<txml xmlns=\"" . Nml::XML_NAMESPACE . "\"/>";
         $xml = Dnml::createRoot('txml');

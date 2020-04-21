@@ -1,8 +1,6 @@
 <?php
 namespace Lib16\XML\Tests;
 
-require_once 'vendor/autoload.php';
-
 use Lib16\XML\ProcessingInstruction;
 use PHPUnit\Framework\TestCase;
 

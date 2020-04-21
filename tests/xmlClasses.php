@@ -3,6 +3,9 @@ namespace Lib16\XML\Tests;
 
 use Lib16\XML\Xml;
 
+const XML_DECL = '<?xml version="1.0" encoding="UTF-8" ?>';
+const XML_START = XML_DECL . "\n";
+
 class Tml extends Xml
 {
     public static function c(string $name = null, string $content = null): self

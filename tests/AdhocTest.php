@@ -1,9 +1,6 @@
 <?php
 namespace Lib16\XML\Tests;
 
-require_once 'vendor/autoload.php';
-require_once 'tests/xmlClasses.php';
-
 use Lib16\XML\Adhoc;
 use PHPUnit\Framework\TestCase;
 

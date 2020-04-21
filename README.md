@@ -1,6 +1,8 @@
 # XML Builder for PHP 7
 A library for creating XML documents written in PHP 7.
 
+[![Build Status](https://travis-ci.org/lib16/xml-builder-php.svg?branch=master)](https://travis-ci.org/lib16/xml-builder-php)
+
 ## Installation with Composer
 This package is available on [packagist](https://packagist.org/packages/lib16/xml),
 so you can use [Composer](https://getcomposer.org) to install it:
