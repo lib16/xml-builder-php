@@ -4,6 +4,7 @@ require_once 'vendor/autoload.php';
 // @todo for Travis CI
 require_once 'vendor/lib16/utils/src/enums/css/LengthUnit.php';
 require_once 'vendor/lib16/utils/src/enums/css/Media.php';
+require_once 'vendor/lib16/utils/src/enums/css/Unit.php';
 require_once 'vendor/lib16/utils/src/enums/mime/StyleType.php';
 
 require_once 'src/Adhoc.php';
