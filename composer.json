@@ -11,7 +11,7 @@
 	"require" : {
 		"php" : ">=7.0",
 		"myclabs/php-enum" : "^1.5",
-		"lib16/utils" : "^1.1"
+		"lib16/utils" : "^1.1.2"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "^6"
