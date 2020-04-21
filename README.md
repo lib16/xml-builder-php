@@ -107,7 +107,9 @@ $html = Html::createHtml('en');
 $body = $html->body();
 $article = $body->article();
 $article->h1('Scripting languages');
-$article->p(Html::abbr('PHP')->setTitle('PHP: Hypertext Preprocessor') . ' is a server-side scripting language designed for web development but also used as a general-purpose programming language.'
+$article->p(
+    Html::abbr('PHP')->setTitle('PHP: Hypertext Preprocessor')
+    . ' is a server-side scripting language designed for web development but also used as a general-purpose programming language.'
 );
 
 print $html;
