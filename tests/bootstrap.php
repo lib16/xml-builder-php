@@ -1,5 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
+require_once 'vendor/lib16/utils/src/enums/css/Media.php';
 require_once 'src/Adhoc.php';
 require_once 'src/Attributes.php';
 require_once 'src/ProcessingInstruction.php';
