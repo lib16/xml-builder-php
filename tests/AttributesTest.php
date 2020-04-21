@@ -1,6 +1,5 @@
 <?php
 namespace Lib16\XML\Tests;
-require_once 'tests/bootstrap.php';
 
 use Lib16\Utils\NumberFormatter;
 use Lib16\Utils\Enums\CSS\ {
