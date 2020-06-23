@@ -9,6 +9,9 @@ class XmlElementWrapperTest extends TestCase
 {
     public function test()
     {
+        $dt = new \DateTime('2020-02-02');
+        $dt->setTimezone(new \DateTimeZone('Europe/Berlin'));
+
         $html = Html::create();
         $head = $html->head()->title('The Title');
         $body = $html->body()->attrib('class', 'pg-static');
@@ -28,7 +31,7 @@ class XmlElementWrapperTest extends TestCase
             $body->getMarkup()
         );
 
-        $body->appendDateTime('p', new \Datetime('2020-02-02'));
+        $body->appendDateTime('p', $dt);
 
         $this->assertEquals(
             "<body class=\"pg-static\">\n"
