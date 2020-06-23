@@ -9,7 +9,7 @@ class XmlElementWrapperTest extends TestCase
 {
     public function test()
     {
-        $dt = new \DateTime('2020-02-02');
+        $dt = new \DateTime('2020-02-02 20:20:00');
         $dt->setTimezone(new \DateTimeZone('Europe/Berlin'));
 
         $html = Html::create();
@@ -35,7 +35,7 @@ class XmlElementWrapperTest extends TestCase
 
         $this->assertEquals(
             "<body class=\"pg-static\">\n"
-            . "\t<p>Sun, 02 Feb 2020 00:00:00 +0100</p>\n"
+            . "\t<p>Sun, 02 Feb 2020 20:20:00 +0100</p>\n"
             . "</body>",
             $body->getMarkup()
         );
