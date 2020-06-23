@@ -35,7 +35,7 @@ class XmlElementWrapperTest extends TestCase
 
         $this->assertEquals(
             "<body class=\"pg-static\">\n"
-            . "\t<p>Sun, 02 Feb 2020 20:20:00 +0100</p>\n"
+            . "\t<p>{$dt->format(\DateTime::RSS)}</p>\n"
             . "</body>",
             $body->getMarkup()
         );
