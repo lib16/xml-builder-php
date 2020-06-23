@@ -1,6 +1,9 @@
 <?php
 namespace Lib16\XML;
 
+/**
+ * @deprecated Replaced by XmlElementWrapper
+ */
 class XmlWrapper
 {
 
