@@ -103,6 +103,11 @@ class Xml
         self::$characterEncoding = $encoding;
     }
 
+    public static function getCharacterEncoding(): string
+    {
+        return self::$characterEncoding;
+    }
+
     public static function setLineBreak(string $lineBreak)
     {
         self::$lineBreak = $lineBreak;
